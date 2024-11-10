@@ -1,0 +1,1 @@
+{"version":3,"file":"entity-history.decorator.js","sourceRoot":"","sources":["../../../src/utils/decorators/entity-history.decorator.ts"],"names":[],"mappings":";;;AAGA,sCAKC;AARY,QAAA,oBAAoB,GAAW,MAAM,CAChD,6BAA6B,CAC9B,CAAC;AACF,SAAgB,aAAa,CAAC,aAAkB;IAE9C,OAAO,CAA6B,MAAiB,EAAQ,EAAE;QAC7D,OAAO,CAAC,cAAc,CAAC,4BAAoB,EAAE,aAAa,EAAE,MAAM,CAAC,CAAC;IACtE,CAAC,CAAC;AACJ,CAAC"}

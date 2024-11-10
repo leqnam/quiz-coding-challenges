@@ -1,0 +1,30 @@
+import { Mapper } from '@automapper/core';
+import { MessagingService } from '@messaging/messaging.service';
+import { JwtService } from '@nestjs/jwt';
+import { QuizQueryDto } from '@quiz/models/dto/quizQueryDto';
+import { QuizSearchDto } from '@quiz/models/dto/quizSearch.dto';
+import { SearchResultDto } from '@utils/models/dtos/search-result.dto';
+import { SearchService } from '@utils/services/search.service';
+import Redis from 'ioredis';
+import { FindOptionsWhere, Repository } from 'typeorm';
+import { QuizDto } from './models/dto/quiz.dto';
+import { Quiz } from './models/entities/quiz.entity';
+export declare class QuizService extends SearchService<Quiz, QuizSearchDto> {
+    private quizRepository;
+    private jwtService;
+    private mapper;
+    private rabbitClient;
+    private readonly redisClient;
+    constructor(quizRepository: Repository<Quiz>, jwtService: JwtService, mapper: Mapper, rabbitClient: MessagingService, redisClient: Redis);
+    protected queryBuilder(model: QuizSearchDto): FindOptionsWhere<Quiz>;
+    query(model: QuizSearchDto): Promise<SearchResultDto<QuizQueryDto>>;
+    createQuiz(token: string, dto: QuizDto): Promise<QuizDto>;
+    startQuiz(quizId: string): Promise<Quiz>;
+    endQuiz(quizId: string): Promise<Quiz>;
+    activeQuiz(quizId: string): Promise<Quiz>;
+    private updateStatusAndPub;
+    findById(id: string): Promise<Quiz>;
+    private cacheQuiz;
+    getQuizFromCache(quizId: string): Promise<any | null>;
+    private getQuiz;
+}

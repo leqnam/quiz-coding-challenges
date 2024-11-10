@@ -1,73 +1,371 @@
-# Real-Time Vocabulary Quiz Coding Challenge
 
-## Overview
+# vocab-quiz
 
-Welcome to the Real-Time Quiz coding challenge! Your task is to create a technical solution for a real-time quiz feature for an English learning application. This feature will allow users to answer questions in real-time, compete with others, and see their scores updated live on a leaderboard.
+Create a technical solution for a real-time quiz feature for an English learning application. This feature will allow users to answer questions in real-time, compete with others, and see their scores updated live on a leaderboard.
 
-## Acceptance Criteria
+## Requirements
 
-1. **User Participation**:
-   - Users should be able to join a quiz session using a unique quiz ID.
-   - The system should support multiple users joining the same quiz session simultaneously.
+[Requirements](Requirements.md)
 
-2. **Real-Time Score Updates**:
-   - As users submit answers, their scores should be updated in real-time.
-   - The scoring system must be accurate and consistent.
+## High-Level Architecture
+This document provides a high-level overview of the architecture of a real-time quiz application.
 
-3. **Real-Time Leaderboard**:
-   - A leaderboard should display the current standings of all participants.
-   - The leaderboard should update promptly as scores change.
+The app is built on microsevice architecture, integrates between technologies, including `Node.js` (`Nest.js`), `PostgresQL`, Caching with `Redis`, and Messaging Queue with `RabbitMQ`, `TypeORM`, `JWT`
 
-## Challenge Requirements
+The architecture is designed to handle real-time interactions, user sessions, and efficient data management.
 
-### Part 1: System Design
+## Component Descriptions
 
-1. **System Design Document**:
-   - **Architecture Diagram**: Create an architecture diagram illustrating how different components of the system interact. This should include all components required for the feature, including the server, client applications, database, and any external services.
-   - **Component Description**: Describe each component's role in the system.
-   - **Data Flow**: Explain how data flows through the system from when a user joins a quiz to when the leaderboard is updated.
-   - **Technologies and Tools**: List and justify the technologies and tools chosen for each component.
+```mermaid
+stateDiagram
+    direction LR
+    [*] --> UI
+    UI --> BE
+    BE --> Database
+    state BE {
+      direction LR
+      user --> quiz
+      quiz --> participation
+      user --> answer(service)
+      answer(service) --> answer(consumer)
+      answer(consumer) --> participation
+      participation --> leaderboard
+    }
+    BE --> Cache
+    BE --> MessagingQueue
 
-### Part 2: Implementation
+```
 
-1. **Pick a Component**:
-   - Implement one of the core components below using the technologies that you are comfortable with. The rest of the system can be mocked using mock services or data.
+The diagram above shows us in general overview between components. The BE system is designed to be deployed on Kubernetes so I have seperate all of group function into every small service with their own database.
 
-2. **Requirements for the Implemented Component**:
-   - **Real-time Quiz Participation**: Users should be able to join a quiz session using a unique quiz ID.
-   - **Real-time Score Updates**: Users' scores should be updated in real-time as they submit answers.
-   - **Real-time Leaderboard**: A leaderboard should display the current standings of all participants in real-time.
+JWT authentication mechanism is used for token introspection for all service communication. 
+Hence, a Bearer token in header for every request between service need to be used.
 
-3. **Build For the Future**:
-   - **Scalability**: Design and implement your component with scalability in mind. Consider how the system would handle a large number of users or quiz sessions. Discuss any trade-offs you made in your design and implementation.
-   - **Performance**: Your component should perform well even under heavy load. Consider how you can optimize your code and your use of resources to ensure high performance.
-   - **Reliability**: Your component should be reliable and handle errors gracefully. Consider how you can make your component resilient to failures.
-   - **Maintainability**: Your code should be clean, well-organized, and easy to maintain. Consider how you can make it easy for other developers to understand and modify your code.
-   - **Monitoring and Observability**: Discuss how you would monitor the performance of your component and diagnose issues. Consider how you can make your component observable.
+### User Service
 
-## Submission Guidelines
+Manages user authentication, registration, and user-related data.
 
-Candidates are required to submit the following as part of the coding challenge:
+Endpoints:
+- Register user
+- Authenticate user
+- Fetch user token
+- Introspec token for all service comunication
 
-1. **System Design Documents**:
-   - **Architecture Diagram**: Illustrate the interaction of system components (server, client applications, database, etc.).
-   - **Component Descriptions**: Explain the role of each component.
-   - **Data Flow**: Describe how data flows from user participation to leaderboard updates.
-   - **Technology Justification**: List the chosen technologies and justify why they were selected.
+Database: Users Table
 
-2. **Working Code**:
-   - Choose one of the core components mentioned in the requirements and implement it using your preferred technologies. The rest of the system can be mocked using appropriate mock services or data.
-   - Ensure the code meets criteria such as scalability, performance, reliability, maintainability, and observability.
+### Quiz Service
 
-3. **Video Submission**:
-   - Record a short video (5-10 minutes) where you address the following:
-     - **Introduction**: Introduce yourself and state your name.
-     - **Assignment Overview**: Describe the technical assignment that ELSA gave in your own words. Feel free to mention any assumptions or clarifications you made.
-     - **Solution Overview**: Provide a crisp overview of your solution, highlighting key design and implementation elements.
-     - **Demo**: Run the code on your local machine and walk us through the output or any tests you’ve written to verify the functionality.
-     - **Conclusion**: Conclude with any remarks, such as challenges faced, learnings, or further improvements you would make.
+Manages the creation of quizzes, quiz sessions, and questions.
 
-   **Video Requirements**:
-   - The video must be between **5-10 minutes**. Any submission beyond 10 minutes will be rejected upfront.
-   - Use any recording device (smartphone, webcam, etc.), ensuring good audio and video quality.
-   - Ensure clear and concise communication.
+Endpoints:
+- Create quiz
+- Get quiz details and questions
+- Manage quiz sessions (e.g., start/end a quiz)
+
+Database: Quiz Table, Questions Table
+
+### Participation Service
+
+Handles user participation, joining quizzes, and tracking scores.
+
+Endpoints:
+- Join quiz session
+- Fetch joined quizzes
+
+Database: User_Quiz Table
+
+### Answer Service
+
+Receive and Publishes answer submissions to Message Queue
+
+Endpoints:
+- Submit answer
+
+Database: Answers Table
+
+### Answer Consumer
+
+- Consumes messages related to answer submissions and score updates. 
+- Checks answers for correctness, and updates scores.
+- Publish scored & noti to MQ answer_point
+
+### Participation Service
+
+- Consume queue and count on answer_point to get total score
+- Updates the score to Db
+- Save list of user's score based on quizId to cache
+- Publish noti to MQ to notify Leaderboard
+
+### Leaderboard Service
+
+- Leaderboard get notified when score changed by consume message from MQ
+- Read total score
+- Get scored from Redis to update score to the Leaderboard
+- WebSocket Integration: Uses WebSockets to push leaderboard updates to connected clients.
+
+Endpoints:
+- Fetch current leaderboard
+
+Data Source: Reads from the User_Quiz Table (for scores) and Redis.
+
+
+### Database
+#### user
+The database `user` uses only `user` table to store user informations, password for managing session and generate JWT
+
+#### quiz
+Collection of Question will be stored into table `question` and list of Quiz wil be in `quiz` table.
+
+#### answer
+User's answer have to store into `answer` table.
+
+
+#### userquiz
+Indicate user join a quiz and total score.
+
+## Technology Justification
+
+#### Microservice
+Using Containerization of Backend Services
+
+Docker: Containerize all backend services using Docker. Each service will run in its own container, providing isolation and consistency across different environments. This allows for easier deployment, scaling, and management of dependencies.
+
+Container Orchestration: Utilize a container orchestration platform such as Kubernetes to manage and scale containerized services. Kubernetes provides automated deployment, scaling, and management of containerized applications, ensuring high availability and resource efficiency.
+
+Load Balancing: Configure an ingress controller in Kubernetes to handle external traffic and distribute it to the appropriate backend services. This ensures that requests are efficiently routed and helps manage scaling.
+
+#### Web Framework: 
+Use frameworks like Node.js/Nestjs to build each microservice.
+
+#### Message Queue: 
+Use RabbitMQ or Kafka to handle event-driven communication between services.
+
+#### Database: 
+- Use a relational database like PostgreSQL for structured data storage.
+- Using TypeORM - efficient way to manage database in a Node.js application, especially with TypeScript. It simplifies database interactions, offers strong type safety, and supports features like migrations, easy relationship management, and a powerful query builder.
+
+#### Cache: 
+Use Redis for caching leaderboard data and reducing database load.
+
+#### WebSockets: 
+Use libraries like Socket.IO (for Node.js) or native WebSocket implementations for real-time updates.
+
+
+# Integration Strategy
+
+## Data Flow
+Here's how we can use Message Queue and WebSockets for real-time performance and reliability.
+
+### Sequence flow IAM
+
+```mermaid
+sequenceDiagram
+    autonumber
+    Client->>+User-Service: POST /auth/login
+    User-Service->>+User Db:Query
+    User Db-->>-User-Service: User
+    User-Service->>User-Service: gen token
+    User-Service-->>-Client: JWT Token
+```
+
+### Sequence flow Sevice to sevice communication
+
+```mermaid
+sequenceDiagram
+    autonumber
+    Client->>Service(s): GET/POST/PUT/DELETE
+    alt Secure request
+        Service(s)->>+User-Service: POST /auth/token/introspect
+        User-Service->>User-Service: verify token
+        User-Service-->>-Service(s): token active
+        Service(s)->>+Service(s) Db: Query data
+        Service(s) Db-->>-Service(s): Response data
+
+        opt Request some extra tasks
+            Service(s)->>+Engine Service(s): Request
+            Engine Service(s)-->>-Service(s): Response result
+        end
+    end
+    Service(s)-->>Client: Response
+
+```
+
+### Sequence flow End-to-end
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant User-Service
+    participant Participation-Service
+    participant Quiz-Service
+    participant Redis
+    participant MQ
+    participant Answer-Service
+    participant Answer-Consumer
+    participant Leaderboard-Service
+
+    autonumber
+
+    Client->>+User-Service: Request token & userId
+    User-Service->>User-Service: generate token
+    User-Service-->>-Client: return accessToken <br>& refreshToken & userId
+
+    alt Client to Retrieve a Quiz
+        Client->>+Quiz-Service: Retrieve a Quiz
+        Quiz-Service->>Quiz-Service: Check Available Quiz & Questions
+        Quiz-Service->>+Redis: Cache to Redis<br>with KEY quiz:{quizId}:questions
+        Quiz-Service-->>-Client: return Available Quiz quizId
+    end
+
+    alt Client to Join a Quiz
+        Client->>+Participation-Service: Join a Quiz<br>POST quizId & userId
+        Participation-Service->>+Quiz-Service: Check Available Quiz & Questions
+        Quiz-Service-->>-Participation-Service: Return Available Quiz & Questions
+        Participation-Service-->>Client: return result joining a Quiz
+        Participation-Service->>-Leaderboard-Service: Establishes a WebSocket connection to update user to the Leaderboard
+        Leaderboard-Service-->>Client: Return Leaderboard via WebSocket
+    end
+
+    alt Client to Answer Questions
+        Client->>+Answer-Service: User answer Question with quizId, QuestionId, UserId
+        Answer-Service->>-MQ: Publishes user's answer to the MQ with KEY<br>answer_queue
+
+        MQ-->>+Answer-Consumer: Consume user's answer from the MQ
+        Redis->>-Answer-Consumer: Get Questions from Redis <br>KEY quiz:{quizId}:questions
+        Answer-Consumer->>Answer-Consumer: Checks answers for correctness from<br>KEY quiz:{quizId}:questions
+        
+        Answer-Consumer->>-MQ: Publish scored & noti to MQ answer_point
+        MQ-->>+Participation-Service: Consume queue and count on answer_point to get total score
+        Participation-Service-->>Participation-Service: Updates the score to Db
+        Participation-Service->>+Redis: Save list of user's score based on quizId to cache
+
+        Participation-Service->>-MQ: Publish noti to MQ to notify Leaderboard
+
+        Leaderboard-Service-->>MQ: Leaderboard get notified when score changed
+        Leaderboard-Service->>Redis: Read total score
+
+        Redis->>+Leaderboard-Service: Get scored from Redis to update score to the Leaderboard
+        Leaderboard-Service-->>-Client: Return Leaderboard via WebSocket
+    end
+
+```
+
+# Demo
+
+## Play on youtube:
+
+[Play on youtube](https://youtu.be/H14kp9VWlcI?si=b75-zGMFuTU44oDl)
+
+[![Vocab-Quiz-Microsevice-MQ-Redis](https://img.youtube.com/vi/H14kp9VWlcI/0.jpg)](https://www.youtube.com/watch?v=H14kp9VWlcI "Vocab-Quiz-Microsevice-MQ-Redis")
+
+## Playground
+
+### Prerequisites
+
+- Docker Desktop (latest version)
+- Nodejs 20.x, Nest.js CLI 10.0.0
+- PostgresDB 15.x
+- Postman, [postman collection](resource/vocab-qz.postman_collection.json)
+- Git
+
+### System Requirements
+- Minimum 4GB RAM
+- Port availability: 
+    - 3001-3006: Nestjs service
+    - 6379: Redis
+    - 5432: Postgres
+    - 5672: RABBITMQ
+
+### Running the app
+
+In every project, **Set up environment variables** by changing the information in `.env`.
+
+- development:
+```
+npm i
+npm run start
+```
+
+- or just run from dist/ pre-built:
+```
+node dist/main.js
+```
+
+The project has been running on its own port.
+
+### Deployment
+
+Using Docker to build and run image.
+
+## Screenshot
+
+1. Start service
+
+![](resource/0-user-svc-start.png)
+
+2. User get token by login/refreshtoken
+
+![](resource/1-login.png)
+
+3. User get a Quiz by Id to join
+
+![](resource/3-join-quiz.png)
+
+4. User answering a question
+
+![](resource/4-post-answer.png)
+
+
+5. The AnswerService has received answer
+
+![](resource/5-post-answer-received.png)
+
+
+6. The AnswerConsumer consume answer and check
+
+![](resource/6-post-answer-consume-and-check.png)
+
+
+7. AnswerConsumer push message about point to ParticipationService
+
+ParticipationService listening and received the message.
+
+![](resource/7-post-point-to-parti.png)
+
+
+8. ParticipationService noti the leaderboard by push a noti message
+
+![](resource/8-noti-leaderboard-svc.png)
+
+
+9. Check the score has been updated
+
+![](resource/9-check-score-db.png)
+
+10. tobe continued...
+
+## Conclusion
+
+I really appreciate your taking the time to review my application. Given the limited time available, it may be difficult to implement a full end-to-end application. The demo only provides an implementation of the architecture and covers most of the possible scenarios. The project need to be improved:
+
+- UI App: A Flutter app that can run on Web, Windows Desktop, macOS, iOS, Android
+- Implement WebSocket: Once UI App is implementing, the WebSocket need to be integrated.
+- Admin Dashboard: To provide an end-to-end solution manage Quiz, Question, User,...
+- Build Permission Matrix: To ensure only authorized user can interacte with their data.
+- Once build on the SIT evironment, as mindset on microservice, monitoring tools may be involved
+
+Beside that, the architecture covers most of the possible scenarios, using JWT to authenticate with the service, also between sevice-to-service. Keycloak is one of choice but for flexible and specific needs, self-implement is a choice. Token is expried and I have provide an enpoint to refresh token, on every sevice call each other, it has to introspect token before make request to ensure sevice is authorized to access.
+
+The app use commons technology to adapt the requirement: 
+
+   - **Scalability**: Build with Microservice architecture, de-coupling components and services with database will lead the stable and easy to scale up/down.
+   - **Performance**: De-coupling service into microservice can lead the service run with lower memory, easy to deploy and manage in a ditributed system. Using Messaging Queue with RabbitMQ and Cache with Redis is the best choice to reduce database read dependencies.
+   - **Reliability**: The app has build with snapshot in database, every changed on the table will be taken a snapshot. Using log on every important task to make it more easy to trace and debugging. If one service fails, it does not bring down the whole system, as other services can continue to function independently.
+   - **Maintainability**: The app build with modules so easy to re-use and extend. (MessagingModule, RedisModule,...)
+   - **Monitoring and Observability**: Build on top of K8s and GUIs for easily managing K8S, and I’ve opted for Rancher as the appropriate tool for deploying and managing K8S. 
+
+To be honest, The challenge made me excited about the opportunity to discuss how my professional experience and skills can contribute to the growth and success of your team.
+
+Best regards, 
+
+Le Quoc Nam

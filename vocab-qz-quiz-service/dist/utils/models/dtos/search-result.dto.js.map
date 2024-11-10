@@ -1,0 +1,1 @@
+{"version":3,"file":"search-result.dto.js","sourceRoot":"","sources":["../../../../src/utils/models/dtos/search-result.dto.ts"],"names":[],"mappings":";;;AAEA,MAAa,eAAe;IAI1B,YAAY,QAAqB,EAAE,IAAS;QAC1C,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;QACzB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;IACnB,CAAC;CACF;AARD,0CAQC"}
