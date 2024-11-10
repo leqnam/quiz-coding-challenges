@@ -288,14 +288,35 @@ npm run start
 
 - or just run from dist/ pre-built:
 ```
+npm i
 node dist/main.js
 ```
 
 The project has been running on its own port.
 
+Run the RabbitMQ and Redis:
+
+```
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-management
+docker run -it --rm --name redis -p 6379:6379 -d redis
+```
+
 ### Deployment
 
 Using Docker to build and run image.
+
+## Live API
+
+I have deployed the sevice on K8s. Just import [postman collection](resource/vocab-qz.postman_collection.json), under folder `Live/Dev`
+
+- Base Url: `https://api-dev.nready.net/vocab-quiz`
+- User Service: `/user/v1/`
+- Quiz Service: `/quiz/v1/`
+- Participation Service: `/participation/v1/`
+- Answer Service: `/answer/v1/`
+- Leader board Service: `/leaderboard/v1/`
+
+### 
 
 ## Screenshot
 
@@ -342,7 +363,9 @@ ParticipationService listening and received the message.
 
 ![](resource/9-check-score-db.png)
 
-10. tobe continued...
+10. Deployment on K8s with Rancher
+
+![](resource/rancher.png)
 
 ## Conclusion
 
@@ -351,8 +374,7 @@ I really appreciate your taking the time to review my application. Given the lim
 - UI App: A Flutter app that can run on Web, Windows Desktop, macOS, iOS, Android
 - Implement WebSocket: Once UI App is implementing, the WebSocket need to be integrated.
 - Admin Dashboard: To provide an end-to-end solution manage Quiz, Question, User,...
-- Build Permission Matrix: To ensure only authorized user can interacte with their data.
-- Once build on the SIT evironment, as mindset on microservice, monitoring tools may be involved
+- Build Permission Matrix: To ensure only authorized user can interacte with their data
 
 Beside that, the architecture covers most of the possible scenarios, using JWT to authenticate with the service, also between sevice-to-service. Keycloak is one of choice but for flexible and specific needs, self-implement is a choice. Token is expried and I have provide an enpoint to refresh token, on every sevice call each other, it has to introspect token before make request to ensure sevice is authorized to access.
 

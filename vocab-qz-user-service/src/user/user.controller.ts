@@ -1,3 +1,4 @@
+import { AllowAnonymous } from '@auth/decorators/public.decorator';
 import { Mapper } from '@automapper/core';
 import { InjectMapper } from '@automapper/nestjs';
 import {
@@ -7,17 +8,15 @@ import {
   Get,
   Param,
   Post,
-  Put,
   Query,
   Request,
   Version,
 } from '@nestjs/common';
 import { UserSearchDto } from '@user/models/dto/userSearch.dto';
 import { QueryTransformPipe } from '@utils/pipes/query-transform.pipe';
+import { UtilsService } from '@utils/services/utils.service';
 import { UserDto } from './models/dto/user.dto';
 import { UserService } from './user.service';
-import { AllowAnonymous } from '@auth/decorators/public.decorator';
-import { UtilsService } from '@utils/services/utils.service';
 
 @Controller('/account')
 export class UserController {
@@ -43,11 +42,10 @@ export class UserController {
     );
   }
 
-  @Put()
+  @Get('/profile/me')
   @Version('1')
-  async updateUserProfile(@Body() body: UserDto) {
-    const user = await this.userService.updateUser(body);
-    return new UserDto(UtilsService.cleanNullObject(user));
+  getMe(@Request() req) {
+    return this.userService.getMe(req.headers.authorization?.split(' ')[1]);
   }
 
   @AllowAnonymous()

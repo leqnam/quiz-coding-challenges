@@ -9,6 +9,7 @@ import { ClassSerializerInterceptor, Logger } from '@nestjs/common';
 async function bootstrap() {
   const port = environment.port;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.enableCors();
   const reflector = app.get(Reflector);
   app.enableShutdownHooks();
   app.enableVersioning();
@@ -25,7 +26,7 @@ async function bootstrap() {
   const logger = new Logger('NestApplication');
   await app.listen(port, async () =>
     logger.log(`
-      ${banner}
+      ${banner} 
       Server initialized in ${environment.env} mode
       ${await app.getUrl()} 
     `),

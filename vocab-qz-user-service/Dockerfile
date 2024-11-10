@@ -3,8 +3,10 @@ USER node
 RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 COPY --chown=node package*.json ./
+# COPY --chown=node .npmrc ./
 RUN node -v && npm -v
 RUN npm install
+# Bundle app source code
 COPY --chown=node . .
 RUN npm run build
 

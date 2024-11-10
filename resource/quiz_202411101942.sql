@@ -1,0 +1,4 @@
+INSERT INTO public.quiz ("version","addedBy","editedBy","deletedBy",id,"name",code,"hostId","isActive",note,status,"createDate","effectDate","inactiveDate","dateLastMaint") VALUES
+	 (1,'b58fd26f-c4d7-4dbe-a237-b62e0d3d4577',NULL,NULL,'2dfc2c1c-002d-42e0-a13d-3352ca6013af','Color Quiz',NULL,'b58fd26f-c4d7-4dbe-a237-b62e0d3d4577',false,NULL,'pending','2024-11-09 13:48:20.250935+07',NULL,NULL,'2024-11-09 13:48:20.250935+07'),
+	 (1,'b58fd26f-c4d7-4dbe-a237-b62e0d3d4577',NULL,NULL,'5318a7e3-5cb2-4ab6-8673-0c23a0c422b4','Science Quiz',NULL,'b58fd26f-c4d7-4dbe-a237-b62e0d3d4577',false,NULL,'pending','2024-11-09 13:48:20.250935+07',NULL,NULL,'2024-11-09 13:48:20.250935+07'),
+	 (4,'b58fd26f-c4d7-4dbe-a237-b62e0d3d4577',NULL,NULL,'e599953a-649e-4106-84e4-de1153a03307','Nam Demo',NULL,'b58fd26f-c4d7-4dbe-a237-b62e0d3d4577',false,NULL,'pending','2024-11-09 13:48:20.250935+07',NULL,NULL,'2024-11-10 11:12:48.593759+07');

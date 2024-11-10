@@ -898,6 +898,98 @@
 							]
 						},
 						{
+							"name": "/get-me",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3001/vocab-quiz/user/v1/account/profile/me",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"vocab-quiz",
+										"user",
+										"v1",
+										"account",
+										"profile",
+										"me"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/get-user by id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3001/vocab-quiz/user/v1/account/b58fd26f-c4d7-4dbe-a237-b62e0d3d4577",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3001",
+											"path": [
+												"vocab-quiz",
+												"user",
+												"v1",
+												"account",
+												"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "NREADY LAB"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "492"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1ec-IwZOpbyBrLwwYmjdkUBccrOFL2Q\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 04:11:28 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T04:09:25.392Z\",\n    \"statusCode\": \"200\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"createDate\": \"2024-11-09T05:57:23.633Z\",\n        \"effectDate\": \"2024-11-09T05:57:23.633Z\",\n        \"dateLastMaint\": \"2024-11-10T04:11:21.646Z\",\n        \"id\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"email\": \"leqnam@live.com\",\n        \"name\": \"Le Quoc Nam\",\n        \"password\": \"$2b$10$nu8MmxQfXK4JNQwKRkWMbOS5FxHJUNHpqFltA1NiRF7qQ1vvdWze.\",\n        \"mobile\": \"0907086323\",\n        \"sessionToken\": \"6kGX5tf6oHxkhQcwto5YoNRAboOfYfnNWHRvlE723Rutvd0wHWVPeO27ouiF\",\n        \"age\": 0\n    }\n}"
+								}
+							]
+						},
+						{
 							"name": "user/all-user",
 							"request": {
 								"auth": {
@@ -1791,9 +1883,6 @@
 						},
 						{
 							"name": "get an anwser",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1807,15 +1896,6 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"userId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\r\n    \"questionId\": \"9014d20b-18eb-438b-b057-2a07f865aefe\",\r\n    \"quizId\": \"2dfc2c1c-002d-42e0-a13d-3352ca6013af\",\r\n    \"userAnswer\": \"true\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "http://localhost:3004/vocab-quiz/answer/v1/question/9014d20b-18eb-438b-b057-2a07f865aefe",
 									"protocol": "http",
@@ -1972,42 +2052,6 @@
 							"response": []
 						},
 						{
-							"name": "get-participation by userquiz",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{accessToken}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3003/vocab-quiz/participation/v1/participation/user/b58fd26f-c4d7-4dbe-a237-b62e0d3d4577/quiz/e599953a-649e-4106-84e4-de1153a03307",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3003",
-									"path": [
-										"vocab-quiz",
-										"participation",
-										"v1",
-										"participation",
-										"user",
-										"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577",
-										"quiz",
-										"e599953a-649e-4106-84e4-de1153a03307"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "(8) join-participation",
 							"request": {
 								"auth": {
@@ -2120,7 +2164,7 @@
 					"name": "Leaderboard",
 					"item": [
 						{
-							"name": "get-leaderboard by userquiz",
+							"name": "get-leaderboard by quizId",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2151,7 +2195,1250 @@
 									]
 								}
 							},
+							"response": [
+								{
+									"name": "get-leaderboard by userquiz",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3005/vocab-quiz/leaderboard/v1/board/quiz/e599953a-649e-4106-84e4-de1153a03307",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3005",
+											"path": [
+												"vocab-quiz",
+												"leaderboard",
+												"v1",
+												"board",
+												"quiz",
+												"e599953a-649e-4106-84e4-de1153a03307"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "246"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"f6-tEo8TdzolBQwBbyYctGKb0N/lFo\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 08:53:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T08:42:03.846Z\",\n    \"statusCode\": \"200\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"id\": \"eedeafb4-2b6a-44f3-ae11-1512f8d25d66\",\n        \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\n        \"userId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"score\": 1\n    }\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Live",
+			"item": [
+				{
+					"name": "Dev",
+					"item": [
+						{
+							"name": "sign-in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var token = JSON.parse(responseBody)[\"responseBody\"];\r",
+											"pm.collectionVariables.set(\"accessToken\", token[\"accessToken\"]);\r",
+											"pm.collectionVariables.set(\"refreshToken\", token[\"refreshToken\"]);\r",
+											"pm.globals.set(\"accessToken\", token[\"accessToken\"]);\r",
+											"pm.globals.set(\"refreshToken\", token[\"refreshToken\"]);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "password",
+											"value": "07112024",
+											"type": "text"
+										},
+										{
+											"key": "mobile",
+											"value": "0907086323",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/user/v1/auth/login",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"user",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "sign-in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "password",
+													"value": "07112024",
+													"type": "text"
+												},
+												{
+													"key": "mobile",
+													"value": "0907086323",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "http://localhost:3001/vocab-quiz/user/v1/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3001",
+											"path": [
+												"vocab-quiz",
+												"user",
+												"v1",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "NREADY LAB"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "773"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"305-xMcI4g9oWwFZz0ObaL99kiLZB5Q\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 03:03:07 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T04:09:25.392Z\",\n    \"statusCode\": \"201\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNThmZDI2Zi1jNGQ3LTRkYmUtYTIzNy1iNjJlMGQzZDQ1NzciLCJpZCI6ImI1OGZkMjZmLWM0ZDctNGRiZS1hMjM3LWI2MmUwZDNkNDU3NyIsIm1vYmlsZSI6IjA5MDcwODYzMjMiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMSIsInNjb3BlIjpbXSwiaWF0IjoxNzMxMjExNzczLCJleHAiOjE3MzEyMTUzNzN9.979FuGK8nr77uOr96Db4Shp5T4s38z_ENl7yKfiz_fw\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNThmZDI2Zi1jNGQ3LTRkYmUtYTIzNy1iNjJlMGQzZDQ1NzciLCJpZCI6ImI1OGZkMjZmLWM0ZDctNGRiZS1hMjM3LWI2MmUwZDNkNDU3NyIsIm1vYmlsZSI6IjA5MDcwODYzMjMiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMSIsInNjb3BlIjpbXSwiaWF0IjoxNzMxMjExNzczLCJleHAiOjE3MzEyOTgxNzN9.VfoaSnSonmcP_b17M4NMsKi8QKnhidMT1CjLCwIQUJo\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "new-user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"aaa@gmail.com\",\r\n    \"name\": \"Nam\",\r\n    \"mobile\": \"0907086321\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/user/v1/account",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"user",
+										"v1",
+										"account"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "new-user",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"aaa@gmail.com\",\r\n    \"name\": \"Nam\",\r\n    \"mobile\": \"0907086321\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3001/vocab-quiz/user/v1/account",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3001",
+											"path": [
+												"vocab-quiz",
+												"user",
+												"v1",
+												"account"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "NREADY LAB"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "163"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a3-PjbcDTHRsyS1mENughe1tWyWasI\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 04:11:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T04:09:25.392Z\",\n    \"statusCode\": \"201\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"email\": \"aaa@gmail.com\",\n        \"name\": \"Nam\",\n        \"mobile\": \"0907086321\",\n        \"age\": 0\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "get-quiz",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/quiz/v1/e599953a-649e-4106-84e4-de1153a03307",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"quiz",
+										"v1",
+										"e599953a-649e-4106-84e4-de1153a03307"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "get-quiz",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3002/vocab-quiz/quiz/v1/e599953a-649e-4106-84e4-de1153a03307",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"vocab-quiz",
+												"quiz",
+												"v1",
+												"e599953a-649e-4106-84e4-de1153a03307"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1309"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"51d-6Gj6sQAAjvNAy19JIr7/y2bPc58\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 03:03:33 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T03:01:12.089Z\",\n    \"statusCode\": \"200\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"id\": \"e599953a-649e-4106-84e4-de1153a03307\",\n        \"name\": \"Nam Demo\",\n        \"status\": \"pending\",\n        \"questions\": [\n            {\n                \"createDate\": \"2024-11-09T06:48:20.250Z\",\n                \"dateLastMaint\": \"2024-11-09T06:48:20.250Z\",\n                \"version\": 1,\n                \"id\": \"cf836ee5-779a-43ba-b5b8-90d215959146\",\n                \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\n                \"content\": \"Blue is the color of the sky?\",\n                \"choices\": \"[\\\"true\\\",\\\"false\\\"]\",\n                \"isActive\": true\n            },\n            {\n                \"createDate\": \"2024-11-09T06:48:20.250Z\",\n                \"dateLastMaint\": \"2024-11-09T06:48:20.250Z\",\n                \"version\": 1,\n                \"id\": \"9014d20b-18eb-438b-b057-2a07f865aefe\",\n                \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\n                \"content\": \"Blue is the color of the sky?????\",\n                \"choices\": \"[\\\"true\\\",\\\"false\\\"]\",\n                \"isActive\": true\n            },\n            {\n                \"createDate\": \"2024-11-09T06:48:20.250Z\",\n                \"dateLastMaint\": \"2024-11-09T06:48:20.250Z\",\n                \"version\": 1,\n                \"id\": \"0ba54dc4-64e7-43d2-b237-f35f5ad1e963\",\n                \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\n                \"content\": \"Adverbs used to describe action?\",\n                \"choices\": \"[\\\"true\\\",\\\"false\\\"]\",\n                \"isActive\": true\n            },\n            {\n                \"createDate\": \"2024-11-09T06:48:20.250Z\",\n                \"dateLastMaint\": \"2024-11-09T06:48:20.250Z\",\n                \"version\": 2,\n                \"id\": \"f98864f1-2b22-4217-9d94-b0b81d607cab\",\n                \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\n                \"content\": \"Is red an adjective?\",\n                \"choices\": \"[\\\"true\\\",\\\"false\\\"]\",\n                \"isActive\": true\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "start-quiz",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/quiz/v1/e599953a-649e-4106-84e4-de1153a03307/start",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"quiz",
+										"v1",
+										"e599953a-649e-4106-84e4-de1153a03307",
+										"start"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "start-quiz",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3002/vocab-quiz/quiz/v1/e599953a-649e-4106-84e4-de1153a03307/start",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"vocab-quiz",
+												"quiz",
+												"v1",
+												"e599953a-649e-4106-84e4-de1153a03307",
+												"start"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "385"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"181-CNXsH2+tLKJEY9MvKVa/B5woGfI\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 04:12:29 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T04:12:16.262Z\",\n    \"statusCode\": \"200\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"createDate\": \"2024-11-09T06:48:20.250Z\",\n        \"dateLastMaint\": \"2024-11-10T04:12:29.847Z\",\n        \"version\": 2,\n        \"id\": \"e599953a-649e-4106-84e4-de1153a03307\",\n        \"name\": \"Nam Demo\",\n        \"hostId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"addedBy\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"status\": \"active\",\n        \"isActive\": false\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "end-quiz",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/quiz/v1/e599953a-649e-4106-84e4-de1153a03307/end",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"quiz",
+										"v1",
+										"e599953a-649e-4106-84e4-de1153a03307",
+										"end"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "end-quiz",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3002/vocab-quiz/quiz/v1/e599953a-649e-4106-84e4-de1153a03307/end",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"vocab-quiz",
+												"quiz",
+												"v1",
+												"e599953a-649e-4106-84e4-de1153a03307",
+												"end"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "384"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"180-R8RxlsWij1u07NM62q2T66+NRI0\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 04:12:39 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T04:12:16.262Z\",\n    \"statusCode\": \"200\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"createDate\": \"2024-11-09T06:48:20.250Z\",\n        \"dateLastMaint\": \"2024-11-10T04:12:39.007Z\",\n        \"version\": 3,\n        \"id\": \"e599953a-649e-4106-84e4-de1153a03307\",\n        \"name\": \"Nam Demo\",\n        \"hostId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"addedBy\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"status\": \"ended\",\n        \"isActive\": false\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "active-quiz",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/quiz/v1/e599953a-649e-4106-84e4-de1153a03307/active",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"quiz",
+										"v1",
+										"e599953a-649e-4106-84e4-de1153a03307",
+										"active"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "active-quiz",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3002/vocab-quiz/quiz/v1/e599953a-649e-4106-84e4-de1153a03307/active",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"vocab-quiz",
+												"quiz",
+												"v1",
+												"e599953a-649e-4106-84e4-de1153a03307",
+												"active"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "386"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"182-5FhoQ3nazLKUIOq9FhswZkm3T+U\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 04:12:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T04:12:16.262Z\",\n    \"statusCode\": \"200\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"createDate\": \"2024-11-09T06:48:20.250Z\",\n        \"dateLastMaint\": \"2024-11-10T04:12:48.593Z\",\n        \"version\": 4,\n        \"id\": \"e599953a-649e-4106-84e4-de1153a03307\",\n        \"name\": \"Nam Demo\",\n        \"hostId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"addedBy\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"status\": \"pending\",\n        \"isActive\": false\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "new-question",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\r\n    \"content\": \"Blue is the color of the sky!\",\r\n    \"answerType\": \"boolean\",\r\n    \"choices\": \"[\\\"true\\\",\\\"false\\\"]\",\r\n    \"correctAnswer\": \"true\",\r\n    \"explanation\": \"The sky appears blue to the human eye as the short waves of blue light are scattered more than the other colours in the spectrum, making the blue light more visible.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/quiz/v1/question",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"quiz",
+										"v1",
+										"question"
+									]
+								}
+							},
 							"response": []
+						},
+						{
+							"name": "get-question by Id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/quiz/v1/question/cf836ee5-779a-43ba-b5b8-90d215959146",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"quiz",
+										"v1",
+										"question",
+										"cf836ee5-779a-43ba-b5b8-90d215959146"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "answer",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"questionId\": \"0ba54dc4-64e7-43d2-b237-f35f5ad1e963\",\r\n    \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\r\n    \"userAnswer\": \"true\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/answer/v1/",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"answer",
+										"v1",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "answer",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"questionId\": \"0ba54dc4-64e7-43d2-b237-f35f5ad1e963\",\r\n    \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\r\n    \"userAnswer\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3004/vocab-quiz/answer/v1/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3004",
+											"path": [
+												"vocab-quiz",
+												"answer",
+												"v1",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "252"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"fc-MVkwVb1lI2yJHN0pvQn2EPJpayM\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 03:07:13 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T03:01:15.629Z\",\n    \"statusCode\": \"201\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"createDate\": \"2024-11-10T03:07:13.258Z\",\n        \"userId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\n        \"userAnswer\": \"true\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "get an anwser detail by id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/answer/v1/question/9014d20b-18eb-438b-b057-2a07f865aefe",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"answer",
+										"v1",
+										"question",
+										"9014d20b-18eb-438b-b057-2a07f865aefe"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "anwser",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"userId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\r\n    \"questionId\": \"9014d20b-18eb-438b-b057-2a07f865aefe\",\r\n    \"quizId\": \"2dfc2c1c-002d-42e0-a13d-3352ca6013af\",\r\n    \"userAnswer\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3004/vocab-quiz/answer/v1/question/9014d20b-18eb-438b-b057-2a07f865aefe",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3004",
+											"path": [
+												"vocab-quiz",
+												"answer",
+												"v1",
+												"question",
+												"9014d20b-18eb-438b-b057-2a07f865aefe"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "349"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"15d-BU5M+kCmT/B0nCPuS5rpzWEjNy4\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 01:57:29 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T01:35:16.898Z\",\n    \"statusCode\": \"200\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"createDate\": \"2024-11-09T18:48:11.040Z\",\n        \"dateLastMaint\": \"2024-11-09T18:48:11.132Z\",\n        \"id\": \"25fba49d-6a58-4edb-b21b-76847085f679\",\n        \"userId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\n        \"userAnswer\": \"true\",\n        \"point\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "get-all participation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/participation/v1/participation",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"participation",
+										"v1",
+										"participation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-participation by id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/participation/v1/participation/ac376b2e-e653-4868-890d-c2315f9cab49",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"participation",
+										"v1",
+										"participation",
+										"ac376b2e-e653-4868-890d-c2315f9cab49"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "(8) join-a quiz",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/participation/v1/participation",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"participation",
+										"v1",
+										"participation"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "(8) join-participation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3003/vocab-quiz/participation/v1/participation",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3003",
+											"path": [
+												"vocab-quiz",
+												"participation",
+												"v1",
+												"participation"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "357"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"165-xcVmiSdkI1idDQryQoQydUEr2r0\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 03:04:15 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T12:20:33.252Z\",\n    \"statusCode\": \"201\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"createDate\": \"2024-11-10T13:05:04.718Z\",\n        \"dateLastMaint\": \"2024-11-10T13:05:04.718Z\",\n        \"version\": 1,\n        \"id\": \"fe03a90a-c1d4-4732-b160-e3ad050163dc\",\n        \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\n        \"userId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"score\": 0,\n        \"isActive\": true\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "get-leaderboard by quizId",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api-dev.nready.net/vocab-quiz/leaderboard/v1/board/quiz/e599953a-649e-4106-84e4-de1153a03307",
+									"protocol": "https",
+									"host": [
+										"api-dev",
+										"nready",
+										"net"
+									],
+									"path": [
+										"vocab-quiz",
+										"leaderboard",
+										"v1",
+										"board",
+										"quiz",
+										"e599953a-649e-4106-84e4-de1153a03307"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "get-leaderboard by userquiz",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3005/vocab-quiz/leaderboard/v1/board/quiz/e599953a-649e-4106-84e4-de1153a03307",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3005",
+											"path": [
+												"vocab-quiz",
+												"leaderboard",
+												"v1",
+												"board",
+												"quiz",
+												"e599953a-649e-4106-84e4-de1153a03307"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "246"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"f6-tEo8TdzolBQwBbyYctGKb0N/lFo\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 10 Nov 2024 08:53:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timestamp\": \"2024-11-10T12:25:51.793Z\",\n    \"statusCode\": \"200\",\n    \"message\": \"Success\",\n    \"responseBody\": {\n        \"id\": \"fe03a90a-c1d4-4732-b160-e3ad050163dc\",\n        \"quizId\": \"e599953a-649e-4106-84e4-de1153a03307\",\n        \"userId\": \"b58fd26f-c4d7-4dbe-a237-b62e0d3d4577\",\n        \"score\": 0\n    }\n}"
+								}
+							]
 						}
 					]
 				}

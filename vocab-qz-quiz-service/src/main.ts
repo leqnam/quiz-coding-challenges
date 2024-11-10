@@ -9,6 +9,7 @@ import { ClassSerializerInterceptor, Logger } from '@nestjs/common';
 async function bootstrap() {
   const port = environment.port;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.enableCors();
   const reflector = app.get(Reflector);
   app.enableShutdownHooks();
   app.enableVersioning();

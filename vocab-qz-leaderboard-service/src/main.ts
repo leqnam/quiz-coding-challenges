@@ -1,15 +1,15 @@
-import { NestFactory, Reflector } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { banner, environment } from '@utils/constants';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { TransformInterceptor } from '@utils/interceptor/response.interceptor';
-import { LoggingInterceptor } from '@utils/interceptor/logging.interceptor';
 import { ClassSerializerInterceptor, Logger } from '@nestjs/common';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { banner, environment } from '@utils/constants';
+import { LoggingInterceptor } from '@utils/interceptor/logging.interceptor';
+import { TransformInterceptor } from '@utils/interceptor/response.interceptor';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const port = environment.port;
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ, // or any other transport (Kafka, Redis, etc.)
     options: {

@@ -9,6 +9,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const port = environment.port;
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ, // or any other transport (Kafka, Redis, etc.)
     options: {
