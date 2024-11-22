@@ -369,7 +369,7 @@ ParticipationService listening and received the message.
 
 ## Conclusion
 
-I really appreciate your taking the time to review my application. Given the limited time available, it may be difficult to implement a full end-to-end application. The demo only provides an implementation of the architecture and covers most of the possible scenarios. The project need to be improved:
+The demo only provides an implementation of the architecture and covers most of the possible scenarios. The project need to be improved:
 
 - UI App: A Flutter app that can run on Web, Windows Desktop, macOS, iOS, Android
 - Implement WebSocket: Once UI App is implementing, the WebSocket need to be integrated.
@@ -386,8 +386,5 @@ The app use commons technology to adapt the requirement:
    - **Maintainability**: The app build with modules so easy to re-use and extend. (MessagingModule, RedisModule,...)
    - **Monitoring and Observability**: Build on top of K8s and GUIs for easily managing K8S, and I’ve opted for Rancher as the appropriate tool for deploying and managing K8S. 
 
-To be honest, The challenge made me excited about the opportunity to discuss how my professional experience and skills can contribute to the growth and success of your team.
-
-Best regards, 
-
-Le Quoc Nam
+## Author
+Le Quoc Nam, leqnam@live.com
